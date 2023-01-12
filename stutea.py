@@ -1,19 +1,40 @@
 from tkinter import *
-from loginteach import *
-from loginstu import *
-from PIL import Image, ImageTk
 
-def stutea():
-    win = Tk()
-    win.title("NASA Academy")
-    my_image = ImageTk.PhotoImage(Image.open("logo.png"))
-    my_label = Label(image=my_image)
-    my_label.pack()
-    im = Label(win, text = " I am a..", font = 15)
-    im.pack()
-    teach = Button(win, text = "Teacher")
-    teach.pack()
-    stu = Button(win, text = "Student")
-    stu.pack()
 
-    win.mainloop()
+def btn_clicked():
+    print("Button Clicked")
+
+
+window = Tk()
+
+window.geometry("1920x1080")
+window.configure(bg = "#ffffff")
+canvas = Canvas(
+    window,
+    bg = "#ffffff",
+    height = 1080,
+    width = 1920,
+    bd = 0,
+    highlightthickness = 0,
+    relief = "ridge")
+canvas.place(x = 0, y = 0)
+
+canvas.create_text(
+    586.0, -74.0,
+    text = "Welcome to",
+    fill = "#000000",
+    font = ("InriaSans-Regular", int(10.0)))
+
+canvas.create_text(
+    596.0, -17.5,
+    text = "NASA ACADEMY",
+    fill = "#000000",
+    font = ("Basic-Regular", int(10.0)))
+
+canvas.create_text(
+    575.0, 455.0,
+    text = "I am a...",
+    fill = "#000000",
+    font = ("None", int(10.0)))
+
+window.mainloop()
