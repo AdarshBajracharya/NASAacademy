@@ -1,39 +1,43 @@
 from tkinter import *
 from PIL import Image, ImageTk
 from tkextrafont import Font
-from PIL import ImageTk,Image
 import customtkinter
 
 
 def stutea():
+    #Creating window
     win = customtkinter.CTk()
     win.title("NASA Academy")
     win.iconbitmap("images/cap.ico")
     win.geometry("1920x1080")
 
+    #Setting background image
     bg = customtkinter.CTkImage(Image.open("images\\sbac.jpg"), size = (1550, 800))
-  
-    # Show image using label
     label1 = customtkinter.CTkLabel(win, image = bg)
     label1.place(x = 0, y = 0)
-  
+    
+    #Creating frame
     frame = customtkinter.CTkFrame(win,width=700,height=700, corner_radius=30, border_color="black", border_width=1)
     frame.pack(padx=20, pady=20)
     frame.pack_propagate(False)
+
+    #Inserting font
     he = Font(file="fonts\Heavitas.ttf", family="Heavitas")
+
+    #Creating Labels, buttons and inserting images
     top = Label(frame, text = "Welcome  to", font = ("Heavitas", 15),bg="#d9d9d9")
     top.pack(padx= 0, pady = 40)
     top2 = Label(frame, text = "NASA ACADEMY", font = ("heavitas", 30),bg="#d9d9d9")
     top2.place(x= 250, y = 67)
     my_image = ImageTk.PhotoImage(file ="images/wlogo.png")                 
     my_label = Label(frame, image=my_image, borderwidth=0)
-    my_label.pack(padx= 5, pady= 80)
-    im = Label(frame, text = " I am a..", font = ("Cambria", 17), background="#d9d9d9")
-    im.place(x= 400 ,y =550)
-    teach = customtkinter.CTkButton(frame, text = "Teacher",text_color="black", corner_radius= 20, width = 200, height=50, font =("Arial black", 20), command =loginteach, fg_color="white",border_color="black", border_width=3, hover_color="grey")
-    teach.pack(padx = 2, pady  = 2)
-    stu = customtkinter.CTkButton(frame, text = "Student",text_color="black", corner_radius= 20,  width = 200, height=50, font =("Arial Black", 20), command = loginstu,fg_color="white",border_color="black", border_width=3,hover_color="grey") 
-    stu.pack(padx = 0, pady = 2)
+    my_label.pack(padx= 5, pady= 50)
+    im = Label(frame, text = " I am a..", font = ("Bahnschrift", 20), background="#d9d9d9")
+    im.place(x= 390 ,y =525)
+    teach = customtkinter.CTkButton(frame, text = "Teacher",text_color="black", corner_radius= 20, width = 200, height=65, font =("Arial black", 20), command =loginteach, fg_color="white",border_color="black", border_width=3, hover_color="grey")
+    teach.place(x = 250, y  = 460)
+    stu = customtkinter.CTkButton(frame, text = "Student",text_color="black", corner_radius= 20,  width = 200, height=65, font =("Arial Black", 20), command = loginstu,fg_color="white",border_color="black", border_width=3,hover_color="grey") 
+    stu.place(x = 250, y = 530)
 
     win.mainloop()
 
