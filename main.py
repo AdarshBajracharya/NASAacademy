@@ -101,79 +101,78 @@ def login():
   
 def reg():
 
-    frame=Tk()
-    frame.title("Registratiion Form")
-    frame.geometry("550x600")
+    frame = Frame(win,width=650,height=650, bd = 10, highlightthickness=3, highlightbackground="black")
+    frame.pack(padx=20, pady=20)
+    frame.pack_propagate(False)
+     
 
-    label_1 = Label(frame, text=" TEACHER REGISTRATION ",font=("bold",20),fg='#F5761A',bg='#746AB0')  
-    label_1.place(x=90,y=60)  
+    label_1 = Label(frame, text=" REGISTRATION ",font=("Heavitas",20))  
+    label_1.place(x=200,y=30)  
 
-    label_2 =Label(frame, text= "First Name: ", width=20,font=("bold",10))  
-    label_2.place(x=80,y=130)  
+    label_2 =Label(frame, text= "First Name: ", width=20,font=("Verdana",10))  
+    label_2.place(x=150,y=130)  
     enter_1 = Entry(frame)  
-    enter_1.place(x=240,y=130)
+    enter_1.place(x=290,y=130)
 
 
-    label_3= Label(frame,text="Last Name: ",width=20,font=("bold",10))
-    label_3.place(x=80,y=160)
+    label_3= Label(frame,text="Last Name: ",width=20,font=("Verdana",10))
+    label_3.place(x=150,y=160)
     enter_2 = Entry(frame)  
-    enter_2.place(x=240,y=160)
+    enter_2.place(x=290,y=160)
 
-    label_14 = Label(frame, text="Gender: ", width=20,font=("bold",10))  
-    label_14.place(x=80,y=190)  
+    label_14 = Label(frame, text="Gender: ", width=20,font=("Verdana",10))  
+    label_14.place(x=150,y=190)  
 
     vars = IntVar() 
 
-    gender_button_male= Radiobutton(frame, text="Male", padx= 5, variable= vars, value=1).place(x=230, y=190)  
-    gender_button_female= Radiobutton(frame, text="Female", padx= 20, variable= vars, value=2).place(x=285,y=190)  
+    gender_button_male= Radiobutton(frame, text="Male", padx= 5, variable= vars, value=1) 
+    gender_button_male.place(x=290, y=190) 
+    gender_button_female= Radiobutton(frame, text="Female", padx= 20, variable= vars, value=2)
+    gender_button_female.place(x=350,y=190)  
 
-    label_4 = Label(frame, text="Email: ", width=20,font=("bold",10))  
-    label_4.place(x=80,y=220)  
+    label_4 = Label(frame, text="Email: ", width=20,font=("Verdana",10))  
+    label_4.place(x=150,y=220)  
     enter_3 = Entry(frame)  
-    enter_3.place(x=240,y=220)  
+    enter_3.place(x=290,y=220)  
 
-    label_5 = Label(frame, text="Address: ", width=20,font=("bold",10))  
-    label_5.place(x= 80,y=250)  
+    label_5 = Label(frame, text="Address: ", width=20,font=("Verdana",10))  
+    label_5.place(x= 150,y=250)  
     enter_4 = Entry(frame)  
-    enter_4.place(x=240,y=250)  
+    enter_4.place(x=290,y=250)  
 
-    label_6 = Label(frame, text="Nationality: ", width=20,font=("bold",10))  
-    label_6.place(x= 80,y=280)  
+    label_6 = Label(frame, text="Nationality: ", width=20,font=("Verdana",10))  
+    label_6.place(x= 150,y=280)  
     enter_5 = Entry(frame)  
-    enter_5.place(x=240,y=280)  
+    enter_5.place(x=290,y=280)  
 
-    label_7 = Label(frame, text="Subject: ", width=20,font=("bold",10))  
-    label_7.place(x= 80,y=310)  
-    list_of_subject=[ 'Maths' ,'Science' , 'English' ,'Social' ,'Nepali' , 'Computer' , 'Opt-Maths' , 'Account' , 'G.k']  
+    label_7 = Label(frame, text="Subject: ", width=20,font=("Verdana",10))  
+    label_7.place(x= 150,y=310)  
+    list_of_subject=[ 'Maths', 'English' , 'Computer']  
     li = StringVar()  
     drplist = OptionMenu(frame, li, *list_of_subject)  
     drplist.config(width=15,bg='grey')  
     li.set('Select your Subject')  
-    drplist.place(x=235, y=304)  
+    drplist.place(x=290, y=304)  
 
 
-    label_8 = Label(frame, text="Date Of Birth: ", width=20,font=("bold",10))  
-    label_8.place(x= 80,y=340)  
+    label_8 = Label(frame, text="Date Of Birth: ", width=20,font=("Verdana",10))  
+    label_8.place(x= 150,y=340)  
     enter_7 = Entry(frame)  
-    enter_7.place(x=240,y=340) 
+    enter_7.place(x=290,y=340) 
 
-    label_9 = Label(frame, text="Place Of Birth: ", width=20,font=("bold",10))  
-    label_9.place(x= 80,y=370)  
+    label_9 = Label(frame, text="Place Of Birth: ", width=20,font=("Verdana",10))  
+    label_9.place(x= 150,y=370)  
     enter_8 = Entry(frame)  
-    enter_8.place(x=240,y=370) 
+    enter_8.place(x=290,y=370) 
 
-    label_10 = Label(frame, text="Language: ", width=20,font=("bold",10))  
-    label_10.place(x= 80,y=400)  
+    label_10 = Label(frame, text="Language: ", width=20,font=("Verdana",10))  
+    label_10.place(x= 150,y=400)  
     enter_9 = Entry(frame)  
-    enter_9.place(x=240,y=400)
+    enter_9.place(x=290,y=400)
 
-    label_13= Label(frame, text="Social Network Site: ", width=20,font=("bold",10))  
-    label_13.place(x= 80,y=490)  
-    enter_11 = Entry(frame)  
-    enter_11.place(x=240,y=490)
-
-    submit_button= Button(frame, text='Submit' , width=20, bg="black",fg='white')
-    submit_button.place(x=180,y=530)  
+ 
+    submit_button= Button(frame, text='Submit',font = ("Helvetica",10) ,height = 1, width=20, bg="blue",fg='white')
+    submit_button.place(x=240,y=450)  
 
 
     frame.mainloop()
