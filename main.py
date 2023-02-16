@@ -4,15 +4,19 @@ from tkextrafont import Font
 from PIL import ImageTk,Image
 import sqlite3
 
-def stutea():
+def main():
 
-    
+    """
+    main function where images, fonts and window is defined and starting page is displayed
+    """
+
+
     global win
     global re
     global reimg
     global restu
     global reteach
-   
+
     #Creating window
     win = Tk()
     win.title("NASA Academy")
@@ -74,10 +78,17 @@ def stutea():
 
 def login():
 
+  
+
+
     frame = Frame(win,width=1000,height=650, bd = 10, highlightthickness=3, highlightbackground="black")
     frame.pack(padx=20, pady=20)
     frame.pack_propagate(False)
-     
+
+    def clickreg():
+        frame.pack_forget()
+        reg()
+
     my_label = Label(frame, image=restu, borderwidth=0)
     my_label.place(x = 70, y = 180)
     s = Label(frame, text = "Student Sign In", font = ("Microsoft Yahei UI light",23))
@@ -88,11 +99,22 @@ def login():
     e.place(x=550,y=180)
     l2=Label(frame,text="Password",font = ("Helvetica",12))
     l2.place(x=550,y=220)
-    e2 =Entry(frame, width =30)
+    e2_str=StringVar()
+    e2 =Entry(frame, width =30,show = "*",textvariable=e2_str)
     e2.place(x=550,y=250)
+    check=IntVar(value=0)
+
+    def show():
+        if(check.get()==1):
+            e2.config(show='')
+        else:
+            e2.config(show='*')
+
+    cb = Checkbutton(frame,variable = check,command = show)
+    cb.place(x=600, y = 280)
     b= Button(frame, text="Log in",font=5,bg="blue", height = 1, width = 10,fg="white")
     b.place(x =620, y = 310)
-    b2= Button(frame,text="Dont have an account ?sign up",padx=10,pady=5,command=reg)
+    b2= Button(frame,text="Dont have an account ?Register",padx=10,pady=5,command=clickreg)
     b2.place(x = 580, y = 380)
 
 
@@ -102,8 +124,13 @@ def login():
 def reg():
 
     frame = Frame(win,width=650,height=650, bd = 10, highlightthickness=3, highlightbackground="black")
-    frame.pack(padx=20, pady=20)
+    frame.pack(padx=20, pady=100)
     frame.pack_propagate(False)
+
+    def clicklog():
+        frame.pack_forget()
+        login()
+    
      
 
     label_1 = Label(frame, text=" REGISTRATION ",font=("Heavitas",20))  
@@ -145,37 +172,30 @@ def reg():
     enter_5 = Entry(frame)  
     enter_5.place(x=290,y=280)  
 
-    label_7 = Label(frame, text="Subject: ", width=20,font=("Verdana",10))  
-    label_7.place(x= 150,y=310)  
-    list_of_subject=[ 'Maths', 'English' , 'Computer']  
-    li = StringVar()  
-    drplist = OptionMenu(frame, li, *list_of_subject)  
-    drplist.config(width=15,bg='grey')  
-    li.set('Select your Subject')  
-    drplist.place(x=290, y=304)  
-
 
     label_8 = Label(frame, text="Date Of Birth: ", width=20,font=("Verdana",10))  
-    label_8.place(x= 150,y=340)  
+    label_8.place(x= 150,y=310)  
     enter_7 = Entry(frame)  
-    enter_7.place(x=290,y=340) 
+    enter_7.place(x=290,y=310) 
 
     label_9 = Label(frame, text="Place Of Birth: ", width=20,font=("Verdana",10))  
-    label_9.place(x= 150,y=370)  
+    label_9.place(x= 150,y=340)  
     enter_8 = Entry(frame)  
-    enter_8.place(x=290,y=370) 
-
-    label_10 = Label(frame, text="Language: ", width=20,font=("Verdana",10))  
-    label_10.place(x= 150,y=400)  
+    enter_8.place(x=290,y=340) 
+ 
+    label_10 = Label(frame, text="Phone Number ", width=20,font=("Verdana",10))  
+    label_10.place(x= 150,y=370)  
     enter_9 = Entry(frame)  
-    enter_9.place(x=290,y=400)
-
+    enter_9.place(x=290,y=370) 
+   
  
     submit_button= Button(frame, text='Submit',font = ("Helvetica",10) ,height = 1, width=20, bg="blue",fg='white')
     submit_button.place(x=240,y=450)  
 
+    b2= Button(frame,text="Already have an account ? Login",padx=10,pady=5,command=clicklog)
+    b2.place(x = 220, y = 510)
+
 
     frame.mainloop()
 
-
-stutea()
+main()
