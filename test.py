@@ -70,3 +70,8 @@ b.place(x=50,y=90)
 b= Button(frame9, text="computer",fg="black")
 b.place(x=50,y=170)
 l5=Label(frame9,text="Friday",fg="black").pack(padx=1,pady=1)
+ 
+frame10=Frame(frame2,bg="grey",width=150,height=600)
+frame10.pack(padx=1,pady=1,side=LEFT)
+frame10.propagate(False)
+l6=Label(frame10,text="Saturday",fg="black").pack(padx=1,pady=1)
