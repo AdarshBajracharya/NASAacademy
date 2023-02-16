@@ -2,7 +2,7 @@ import sqlite3
 
 
 # Creating a data table
-def cr_db():
+def cred():
     conn=sqlite3.connect('student.db')
     c=conn.cursor()
 

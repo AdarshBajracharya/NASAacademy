@@ -2,7 +2,9 @@ from tkinter import *
 from tkinter import messagebox
 from tkextrafont import Font
 from PIL import ImageTk,Image
-import sqlite3
+import creds
+import database
+
 
 def main():
 
@@ -150,47 +152,22 @@ def reg():
     enter_2 = Entry(frame)  
     enter_2.place(x=290,y=160)
 
-    label_14 = Label(frame, text="Gender: ", width=20,font=("Verdana",10))  
-    label_14.place(x=150,y=190)  
-
-    vars = IntVar() 
-
-    gender_button_male= Radiobutton(frame, text="Male", padx= 5, variable= vars, value=1) 
-    gender_button_male.place(x=290, y=190) 
-    gender_button_female= Radiobutton(frame, text="Female", padx= 20, variable= vars, value=2)
-    gender_button_female.place(x=350,y=190)  
-
+  
     label_4 = Label(frame, text="Email: ", width=20,font=("Verdana",10))  
     label_4.place(x=150,y=220)  
     enter_3 = Entry(frame)  
     enter_3.place(x=290,y=220)  
 
-    label_5 = Label(frame, text="Address: ", width=20,font=("Verdana",10))  
+    label_5 = Label(frame, text="Password: ", width=20,font=("Verdana",10))  
     label_5.place(x= 150,y=250)  
     enter_4 = Entry(frame)  
     enter_4.place(x=290,y=250)  
 
-    label_6 = Label(frame, text="Nationality: ", width=20,font=("Verdana",10))  
+    label_6 = Label(frame, text="Repeat password: ", width=20,font=("Verdana",10))  
     label_6.place(x= 150,y=280)  
     enter_5 = Entry(frame)  
     enter_5.place(x=290,y=280)  
 
-
-    label_8 = Label(frame, text="Date Of Birth: ", width=20,font=("Verdana",10))  
-    label_8.place(x= 150,y=310)  
-    enter_7 = Entry(frame)  
-    enter_7.place(x=290,y=310) 
-
-    label_9 = Label(frame, text="Place Of Birth: ", width=20,font=("Verdana",10))  
-    label_9.place(x= 150,y=340)  
-    enter_8 = Entry(frame)  
-    enter_8.place(x=290,y=340) 
- 
-    label_10 = Label(frame, text="Phone Number ", width=20,font=("Verdana",10))  
-    label_10.place(x= 150,y=370)  
-    enter_9 = Entry(frame)  
-    enter_9.place(x=290,y=370) 
-   
  
     submit_button= Button(frame, text='Submit',font = ("Helvetica",10) ,height = 1, width=20, bg="blue",fg='white')
     submit_button.place(x=240,y=450)  
@@ -207,6 +184,62 @@ def routin():
     frame = Frame(win,width=1450,height=900, bd = 10, highlightthickness=3, highlightbackground="black")
     frame.pack(padx=20, pady=20)
     frame.pack_propagate(False)
+
+    def eng():
+        root = Tk()
+        root.geometry("290x300")
+        root.propagate(False)
+        root.title("Class info")
+
+        Teach_label = Label(root, text="Teacher : ",font = "Ariel")
+        Teach_label.place(x = 20, y =20)
+
+        Teach_Entry = Entry(root)
+        Teach_Entry.place(x = 120, y =30)
+
+        Class_label = Label(root, text="Class : ",font = "Ariel")
+        Class_label.place(x = 20, y =50)
+
+        Class_Entry = Entry(root)
+        Class_Entry.place(x = 120, y =60)
+
+    def comp():
+        root = Tk()
+        root.geometry("290x300")
+        root.propagate(False)
+        root.title("Class info")
+
+        Teach_label = Label(root, text="Teacher : ",font = "Ariel")
+        Teach_label.place(x = 20, y =20)
+
+        Teach_Entry = Entry(root)
+        Teach_Entry.place(x = 120, y =30)
+
+        Class_label = Label(root, text="Class : ",font = "Ariel")
+        Class_label.place(x = 20, y =50)
+
+        Class_Entry = Entry(root)
+        Class_Entry.place(x = 120, y =60)
+
+
+    def maths():
+        root = Tk()
+        root.geometry("290x300")
+        root.propagate(False)
+        root.title("Class info")
+
+        Teach_label = Label(root, text="Teacher : ",font = "Ariel")
+        Teach_label.place(x = 20, y =20)
+
+        Teach_Entry = Entry(root)
+        Teach_Entry.place(x = 120, y =30)
+
+        Class_label = Label(root, text="Class : ",font = "Ariel")
+        Class_label.place(x = 20, y =50)
+
+        Class_Entry = Entry(root)
+        Class_Entry.place(x = 120, y =60)
+
 
     def clickback():
         frame.pack_forget()
@@ -234,18 +267,18 @@ def routin():
     frame4=Frame(frame2,bg="grey",width=150,height=600)
     frame4.pack(padx=1,pady=1,side=LEFT)
     frame4.propagate(False)
-    b= Button(frame4, text="English" ,font =("Arial Black",10),fg="black")
+    b= Button(frame4, text="English" ,font =("Arial Black",10),fg="black",command = eng)
     b.place(x=50,y=30)
-    b= Button(frame4, text="Computer",font =("Arial Black",10),fg="black")
+    b= Button(frame4, text="Computer",font =("Arial Black",10),fg="black",command = comp)
     b.place(x=50,y=90)
     l7=Label(frame4,text="Sunday",fg="black").pack(padx=1,pady=1) 
 
     frame5=Frame(frame2,bg="grey",width=150,height=600)
     frame5.pack(padx=1,pady=1,side=LEFT)
     frame5.propagate(False)
-    b= Button(frame5, text="English",font =("Arial Black",10),fg="black")
+    b= Button(frame5, text="English",font =("Arial Black",10),fg="black",command = eng)
     b.place(x=50,y=170)
-    b= Button(frame5, text="Maths",font =("Arial Black",10),fg="black")
+    b= Button(frame5, text="Maths",font =("Arial Black",10),fg="black",command =maths)
     b.place(x=50,y=215)
     l1=Label(frame5,text="Monday",fg="black").pack(padx=1,pady=1)
 
@@ -253,36 +286,36 @@ def routin():
     frame6=Frame(frame2,bg="grey",width=150,height=600)
     frame6.pack(padx=1,pady=1,side=LEFT)
     frame6.propagate(False)
-    b= Button(frame6, text="English",font =("Arial Black",10),fg="black")
+    b= Button(frame6, text="English",font =("Arial Black",10),fg="black",command = eng)
     b.place(x=50,y=290)
-    b= Button(frame6, text="Computer",font =("Arial Black",10),fg="black")
+    b= Button(frame6, text="Computer",font =("Arial Black",10),fg="black",command = comp)
     b.place(x=50,y=380)
     l2=Label(frame6,text="Tuesday",fg="black").pack(padx=1,pady=1)
 
     frame7=Frame(frame2,bg="grey",width=150,height=600)
     frame7.pack(padx=1,pady=1,side=LEFT)
     frame7.propagate(False)
-    b= Button(frame7, text="Maths",font =("Arial Black",10),fg="black")
+    b= Button(frame7, text="Maths",font =("Arial Black",10),fg="black",command =maths)
     b.place(x=50,y=30)
-    b= Button(frame7, text="Computer",font =("Arial Black",10),fg="black")
+    b= Button(frame7, text="Computer",font =("Arial Black",10),fg="black",command = comp)
     b.place(x=50,y=90)
     l3=Label(frame7,text="Wednesday",fg="black").pack(padx=1,pady=1)
 
     frame8=Frame(frame2,bg="grey",width=150,height=600)
     frame8.pack(padx=1,pady=1,side=LEFT)
     frame8.propagate(False)
-    b= Button(frame8, text="Computer",font =("Arial Black",10),fg="black")
+    b= Button(frame8, text="Computer",font =("Arial Black",10),fg="black",command = comp)
     b.place(x=50,y=215)
-    b= Button(frame8, text="Maths",font =("Arial Black",10),fg="black")
+    b= Button(frame8, text="Maths",font =("Arial Black",10),fg="black",command =maths)
     b.place(x=50,y=290)
     l4=Label(frame8,text="Thursday",fg="black").pack(padx=1,pady=1)
 
     frame9=Frame(frame2,bg="grey",width=150,height=600)
     frame9.pack(padx=1,pady=1,side=LEFT)
     frame9.propagate(False)
-    b= Button(frame9, text="Maths",font =("Arial Black",10),fg="black")
+    b= Button(frame9, text="Maths",font =("Arial Black",10),fg="black",command =maths)
     b.place(x=50,y=90)
-    b= Button(frame9, text="computer",font =("Arial Black",10),fg="black")
+    b= Button(frame9, text="computer",font =("Arial Black",10),fg="black",command = comp)
     b.place(x=50,y=170)
     l5=Label(frame9,text="Friday",fg="black").pack(padx=1,pady=1)
     
