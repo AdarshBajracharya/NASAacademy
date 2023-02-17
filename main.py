@@ -2,8 +2,10 @@ from tkinter import *
 from tkinter import messagebox
 from tkextrafont import Font
 from PIL import ImageTk,Image
-import creds
-import database
+from tkinter import ttk
+import sqlite3
+# import creds
+# import database
 
 
 def main():
@@ -332,31 +334,6 @@ def routin():
     l17=Label(frame3,text="3PM",fg="black").pack(padx=10,pady=10)
 
     
-def homepage():
 
-    def clickrout():
-        frame.pack_forget()
-        routin()
-
-    frame = Frame(win,width=800,height=800, bd = 10, highlightthickness=3, highlightbackground="black")
-    frame.pack(padx=20, pady=20)
-    frame.pack_propagate(False)
-
-    my_label = Label(frame, image=reimg, borderwidth=0)
-    my_label.place(x = 250, y = 100)
-
-    
-    routine = Button(frame, text = "Routine", width = 15, height=1, font =("Heavitas", 20), activebackground= "grey",bg="white",command = clickrout)
-    routine.place(x = 230, y = 420)
-
-    students = Button(frame, text = "Students", width = 15, height=1, font =("Heavitas", 20), activebackground= "grey",bg="white")
-    students.place(x = 230, y = 490)
-
-    result = Button(frame, text = "Result", width = 15, height=1, font =("Heavitas", 20), activebackground= "grey",bg="white")
-    result.place(x = 230, y = 560)
-
-    acc_details = Button(frame, text = "Account", width = 15, height=1, font =("Heavitas", 20), activebackground= "grey",bg="white")
-    acc_details.place(x = 230, y = 630)
-    
-
-main()
+if __name__ == "__main__":
+    main()
