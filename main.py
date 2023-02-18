@@ -381,6 +381,7 @@ def database():
     button.place(x =0, y = 0)
 
 #==== Frame 1 ================
+
     Frame1=Frame(root,bd=4,relief=RIDGE,bg="grey")
     Frame1.place(x=20,y=100,width=450,height=590)
 
@@ -480,6 +481,7 @@ def database():
 
 
 # update function -------------
+
     def UPDATE():
         conn= sqlite3.connect('Students.db')
         c= conn.cursor()
@@ -511,6 +513,8 @@ def database():
         conn.commit()
         conn.close()
         Frame1.destroy()
+
+# Edit function ------- 
 
     def EDIT():
 
@@ -591,7 +595,7 @@ def database():
         combo_total_marks_editior.grid(row=7,column=1)
 
         
-    #  loop through result ------- 
+#  loop through result ------- 
         for record in records:
             text_name_editior.insert(0, record[0])
             text_roll_editior.insert(0, record[1])
@@ -607,7 +611,7 @@ def database():
         conn.commit()
         conn.close()
         
-    #  DELETE function ------------
+#  DELETE function ------------
 
     def DELETE():
         conn= sqlite3.connect('Students.db')
@@ -624,7 +628,7 @@ def database():
 
         print_record=''
         for record in records:
-            print_record += str(record[0])+' '+str(record[1])+' '+str(record[2])+' '+str(record[3])+' '+str(record[4])+' '+str(record[5])+' '+str(record[6])+"\n"
+            print_record += str(record[0])+'  '+str(record[1])+'  '+str(record[2])+'  '+str(record[3])+'  '+str(record[4])+'  '+str(record[5])+'  '+str(record[6])+"\n"
 
         query_label= Label(student_table,text= print_record)
         query_label.grid(row=8, column=0,rowspan=2 ,columnspan=20)
@@ -666,31 +670,6 @@ def database():
         conn.commit()
         conn.close()
 
-# SHOW query ------------
-
-    def QUERY():
-
-        conn= sqlite3.connect('Students.db')
-
-        c= conn.cursor()
-
-        c.execute("SELECT *, oid FROM student")
-
-        records= c.fetchall()
-        print(records)
-
-        print_record=' '
-        for record in records:
-            print_record += str(record[0])+ "  "+"\t"+" " +str(record[1])+ "  "+"\t"+" " +str(record[2])+" "+"\t"+ " "+str(record[3])+ " "+ "\t" +" "+str(record[6])+"\n"
-
-        query_label= Label(student_table,text= print_record)
-        query_label.grid(row=1,column=4,padx=10,pady=30)
-
-        conn.commit()
-        conn.close()
-
-
-
     
     # Button frame ---------------
 
@@ -700,25 +679,27 @@ def database():
     Addbttm= Button(bttm_Frame1,text="ADD",width=10,command=ADD).grid(row=0,column=0,padx=10,pady=10)
     Updatebttm= Button(bttm_Frame1,text="EDIT",width=10,command=EDIT).grid(row=0,column=1,padx=10,pady=10)
     Deletebttm= Button(bttm_Frame1,text="DELETE",width=10,command=DELETE).grid(row=0,column=2,padx=10,pady=10)
-    querybttm= Button(bttm_Frame1,text="SHOW",width=10,command=QUERY).grid(row=0,column=3,pady=10,padx=10)
+
 
     # Table frame ---------------
 
     table_frame= Frame(Frame2,bd=4, relief=RIDGE,bg="white")
     table_frame.place(x=10,y=70,width=770,height=500)
 
-    # scroll -------------------
+# scroll -------------------
 
     scroll_x= Scrollbar(table_frame,orient=HORIZONTAL)
     scroll_y= Scrollbar(table_frame,orient=VERTICAL)
 
-    # student_table-----------   
+
+# student_table-----------   
 
     student_table= ttk.Treeview(table_frame,columns=("StudentName","RollNo","Gender","Section","Subject","ObtainMarks","FinalMarks"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
     scroll_x.pack(side=BOTTOM,fill=X)
     scroll_y.pack(side=RIGHT,fill=Y)
     scroll_x.config(command=student_table.xview)
     scroll_y.config(command=student_table.yview)
+    student_table["columns"] = ("StudentName", "RollNo", "Gender","Section","Subject","ObtainMarks","FinalMarks")
     student_table.heading("StudentName",text="StudentName")
     student_table.heading("RollNo",text="RollNo")
     student_table.heading("Gender",text="Gender")
@@ -727,7 +708,29 @@ def database():
     student_table.heading("ObtainMarks",text="ObtainMarks")
     student_table.heading("FinalMarks",text="FinalMarks")
     student_table['show']='headings'
+    student_table.column("StudentName",width=100)
+    student_table.column("RollNo",width=50)
+    student_table.column("Gender",width=50)
+    student_table.column("Section",width=50)
+    student_table.column("Subject",width=50)
+    student_table.column("ObtainMarks",width=100)
+    student_table.column("FinallMarks",width=100)
     student_table.pack(fill=BOTH,expand=1)
+
+# SHOW query ------------
+
+    def QUERY():
+        conn = sqlite3.connect("Students.db")
+
+        cursor = conn.execute("SELECT * FROM student")
+        for row in cursor:
+            student_table.insert(parent='', index='end', values=(row[0], row[1], row[2],row[3],row[4],row[5],row[6]))
+
+
+        conn.commit()
+        conn.close()
+
+    querybttm= Button(bttm_Frame1,text="SHOW",width=10,command=QUERY).grid(row=0,column=3,pady=10,padx=10)
 
 
     try:# Creates tables for new host machine.
