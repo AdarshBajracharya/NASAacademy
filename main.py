@@ -380,12 +380,12 @@ def database():
     button = Button(frame, text = "Go back", font = ("heavitas",15), bg = "blue", fg = "white",command = clickback)
     button.place(x =0, y = 0)
 
+#==== Frame 1 ================
 
-        
-    Frame1=Frame(frame,bd=4,relief=RIDGE,bg="grey")
+    Frame1=Frame(root,bd=4,relief=RIDGE,bg="grey")
     Frame1.place(x=20,y=100,width=450,height=590)
 
-    title1= Label(Frame1,text="Manage Students",bd=10,relief=GROOVE,fg="white",font=("Heavitas",20,"bold"),bg="red")
+    title1= Label(Frame1,text="Manage Students Result",bd=10,relief=GROOVE,fg="white",font=("times new roman",20,"bold"),bg="red")
     title1.grid(row=0,columnspan=2,pady=20)
 
     # create a text box and label ---- 
@@ -424,10 +424,9 @@ def database():
     text_subject= Entry(Frame1,font=("times new roman",15,"bold"),bd=5,relief=GROOVE)
     text_subject.grid(row=5,column=1,pady=10,padx=20,sticky="w")
 
-    combo_total_marks= ttk.Combobox(Frame1,font=("times new roman",13,"bold"),state="readonly")
-    combo_total_marks['values']=("Science","Maths","English","Nepali","Social","Computer")
-    combo_total_marks.grid(row=5,column=1,padx=20,pady=10)
-
+    combo_total_subject= ttk.Combobox(Frame1,font=("times new roman",13,"bold"),state="readonly")
+    combo_total_subject['values']=("Science","Maths","English","Nepali","Social","Computer")
+    combo_total_subject.grid(row=5,column=1,padx=20,pady=10)
 
     label_obt_marks= Label(Frame1,text="Obtain Marks: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
     label_obt_marks.grid(row=6,column=0,pady=10,padx=20,sticky="w")
@@ -445,9 +444,15 @@ def database():
     combo_total_marks['values']=("75","100")
     combo_total_marks.grid(row=7,column=1,padx=20,pady=10)
 
+    delete_box_lable= Label(Frame1,text="ID Number: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+    delete_box_lable.grid(row=8,column=0,pady=10,padx=20,sticky="w")
+
+    delete_box= Entry(Frame1,font=("times new roman",15,"bold"),bd=5,relief=GROOVE)
+    delete_box.grid(row=8,column=1,pady=10,padx=20,sticky="w")
+
     #==== Frame 2 ================
 
-    Frame2=Frame(frame,bd=4,relief=RIDGE,bg="grey")
+    Frame2=Frame(root,bd=4,relief=RIDGE,bg="grey")
     Frame2.place(x=500,y=100,width=800,height=590)
 
     lbl_search=Label(Frame2,text="Search By: ",bg="grey",fg="white",font=("times new roman",20,"bold"))
@@ -460,33 +465,117 @@ def database():
     text_Search= Entry(Frame2,width=15,font=("times new roman",15,"bold"),bd=5)
     text_Search.grid(row=0,column=2,pady=10,padx=20,sticky="w")
 
+    # Creating a data table =============
 
+    conn=sqlite3.connect('Students.db')
+    c=conn.cursor()
 
-
-
-
-
-    def config() -> None:
-        # Creating a data table
-
-        conn=sqlite3.connect('Students.db')
-        c=conn.cursor()
-
-        c.execute(""" CREATE TABLE student(
-            StudentName text,
-            RollNo integer PRIMARY KEY,
-            Gender text,
-            Subject text,
-            Section text,
-            ObtMarks integer,
-            FinalMarks integer
-            )""")
-        print("database created successfully")
-        conn.commit()
-        conn.close()
+    # c.execute(""" CREATE TABLE student(
+    #     StudentName text,
+    #     RollNo integer PRIMARY KEY,
+    #     Gender text,
+    #     Section text,
+    #     Subject text,
+    #     ObtMarks integer,
+    #     FinalMarks integer
+    #     )""")
+    # print("database created successfully")
+    conn.commit()
+    conn.close()
 
     def initialize():
-        global root,text_name,text_roll,text_gender,text_subject,text_section,text_obt_marks,text_total_marks,Updatebttm,Deletebttm
+            global root,text_name,text_roll,combo_gender,text_section,text_subject,text_obt_marks,text_total_marks
+
+    # update function -------------
+
+    def EDIT():
+
+        editor= Toplevel()
+        editor.title('Update Data')
+        editor.geometry("1350x700+0+0")
+
+        conn= sqlite3.connect('Students.db')
+
+        c= conn.cursor()
+
+        record_id= delete_box.get()
+
+        c.execute("SELECT * FROM student WHERE oid = " + record_id)
+
+        records= c.fetchall()
+
+        
+        Frame1=Frame(editor,bd=4,relief=RIDGE,bg="grey")
+        Frame1.place(x=430,y=90,width=600,height=590)
+
+        title1= Label(Frame1,text="Update Students Result",bd=10,relief=GROOVE,fg="white",font=("times new roman",20,"bold"),bg="red")
+        title1.grid(row=0,column=1,columnspan=3,pady=20,padx=10)
+
+        label_name_editior= Label(Frame1,text="Student Name: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_name_editior.grid(row=1,column=0,pady=10,padx=20,sticky="w")
+
+        text_name_editior= Entry(Frame1,font=("times new roman",15,"bold"),bd=5,relief=GROOVE)
+        text_name_editior.grid(row=1,column=1,pady=10,padx=20,sticky="w")
+
+        label_roll_editior= Label(Frame1,text="Roll No: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_roll_editior.grid(row=2,column=0,pady=10,padx=20,sticky="w")
+
+        text_roll_editior= Entry(Frame1,font=("times new roman",15,"bold"),bd=5,relief=GROOVE)
+        text_roll_editior.grid(row=2,column=1,pady=10,padx=20,sticky="w")
+
+        label_gender_editior= Label(Frame1,text="Gender: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_gender_editior.grid(row=3,column=0,pady=10,padx=20,sticky="w")
+
+        combo_gender_editior= ttk.Combobox(Frame1,font=("times new roman",14,"bold"),state="readonly")
+        combo_gender_editior['values']=("Male","Female")
+        combo_gender_editior.grid(row=3,column=1)
+
+        label_section_editior= Label(Frame1,text="Section: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_section_editior.grid(row=4,column=0,pady=10,padx=20,sticky="w")
+
+        text_section_editior= Entry(Frame1,font=("times new roman",15,"bold"),bd=5,relief=GROOVE)
+        text_section_editior.grid(row=4,column=1,pady=10,padx=20,sticky="w")
+
+        label_subject_editior= Label(Frame1,text="Subject: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_subject_editior.grid(row=5,column=0,pady=10,padx=20,sticky="w")
+
+        combo_total_subject_editior= ttk.Combobox(Frame1,font=("times new roman",14,"bold"),state="readonly")
+        combo_total_subject_editior['values']=("Science","Maths","English","Nepali","Social","Computer")
+        combo_total_subject_editior.grid(row=5,column=1)
+
+        label_obt_marks_editior= Label(Frame1,text="Obtain Marks: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_obt_marks_editior.grid(row=6,column=0,pady=10,padx=20,sticky="w")
+
+        text_obt_marks_editior= Entry(Frame1,font=("times new roman",15,"bold"),bd=5,relief=GROOVE)
+        text_obt_marks_editior.grid(row=6,column=1,pady=10,padx=20,sticky="w")
+
+        label_total_marks_editior= Label(Frame1,text="Total Marks: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_total_marks_editior.grid(row=7,column=0,pady=10,padx=20,sticky="w")
+
+        combo_total_marks_editior= ttk.Combobox(Frame1,font=("times new roman",14,"bold"),state="readonly")
+        combo_total_marks_editior['values']=("75","100")
+        combo_total_marks_editior.grid(row=7,column=1)
+
+        
+    #  loop through result ------- 
+        for record in records:
+            text_name_editior.insert(0, record[0])
+            text_roll_editior.insert(0, record[1])
+            combo_gender_editior.insert(0, record[2])
+            text_section_editior.insert(0, record[3])
+            combo_total_subject_editior.insert(0, record[4])
+            text_obt_marks_editior.insert(0, record[5])
+            combo_total_marks_editior.insert(0, record[6])
+
+        Updatebttm_editior= Button(Frame1,text="SAVE",command= SAVE ,width=10)
+        Updatebttm_editior.grid(row=9,column=1,padx=10,pady=10)
+
+
+    # SAVE function ----------
+
+    def SAVE():
+        print("save")
+
 
     #  DELETE function ------------
 
@@ -495,20 +584,20 @@ def database():
 
         c= conn.cursor()
 
-        c.execute("DELETE from student WHERE oid =  " + text_Search.get())
+        c.execute("DELETE from student WHERE oid =  " + delete_box.get())
         print('Delete Sucessfully')
 
-        c.execute("SELECT *, oid FROM student")
+        delete_box.delete(0,END)
 
         records= c.fetchall()
         print(records)
 
         print_record=''
         for record in records:
-            print_record += str(record[0])+' '+str(record[1])+' '+'\t'+str(record[4])+"\n"
+            print_record += str(record[0])+' '+str(record[1])+' '+str(record[2])+' '+str(record[3])+' '+str(record[4])+' '+str(record[5])+' '+str(record[6])+"\n"
 
-        query_label= Label(root,text= print_record)
-        query_label.grid(row=8, column=0, columnspan=2)
+        query_label= Label(student_table,text= print_record)
+        query_label.grid(row=8, column=0,rowspan=2 ,columnspan=20)
 
         messagebox.showinfo("Alert","Deleted Sucessfully")
 
@@ -521,13 +610,13 @@ def database():
         conn=sqlite3.connect('Students.db')
         c=conn.cursor()
         
-        c.execute('INSERT INTO student VALUES (:StudentName, :RollNo, :Gender, :Subject, :Section, :ObtMarks, :FinalMarks)',
+        c.execute('INSERT INTO student VALUES (:StudentName, :RollNo, :Gender, :Section, :Subject,  :ObtMarks, :FinalMarks)',
             {
             'StudentName': text_name.get(),
             'RollNo': text_roll.get(),
-            'Gender': text_gender.get(),
-            'Subject': text_subject.get(),
+            'Gender': combo_gender.get(),
             'Section': text_section.get(),
+            'Subject': text_subject.get(),
             'ObtMarks': text_obt_marks.get(),
             'FinalMarks': text_total_marks.get()
             
@@ -536,11 +625,13 @@ def database():
 
         text_name.delete(0,END)
         text_roll.delete(0,END)
-        text_gender.delete(0,END)
+        combo_gender.delete(0,END)
         text_subject.delete(0,END)
         text_section.delete(0,END)
         text_obt_marks.delete(0,END)
         text_total_marks.delete(0,END)
+
+        messagebox.showinfo("Alert","Added Sucessfully")
         
         conn.commit()
 
@@ -561,113 +652,30 @@ def database():
 
         print_record=' '
         for record in records:
-            print_record += str(record[0])+ " " +str(record[1])+ " " + "\t" +str(record[6])+"\n"
+            print_record += str(record[0])+ "  "+"\t"+" " +str(record[1])+ "  "+"\t"+" " +str(record[2])+" "+"\t"+ " "+str(record[3])+ " "+ "\t" +" "+str(record[6])+"\n"
 
         query_label= Label(student_table,text= print_record)
-        query_label.grid(row=0,column=4,padx=10,pady=10)
+        query_label.grid(row=1,column=4,padx=10,pady=30)
 
         conn.commit()
         conn.close()
 
-    def edit():
-
-        global root,text_name_edit,text_roll_edit,text_gender_edit,text_subject_edit,text_section_edit,text_obtmarks_edit,text_finalmarks_edit
-        
-
-        root= Toplevel(root)
-        root.title('Update Data')
-        root.geometry('800x800')
-
-        conn= sqlite3.connect('Students.db')
-
-        c=conn.cursor()
-
-        record_id= UPDATE.get()
-
-        c.execute('SELECT * FROM student WHERE oid='+ record_id)
-
-        records = c.fetchall()
-
-        # print(records)
-        
-        Label(root,text="StudentName").grid(row=0,column=0,padx=(50,0))
-        text_name_edit=Entry(root)
-        text_name_edit.grid(row=0,column=1,pady=10)
-
-        Label(root,text="RollNo").grid(row=1,column=0)
-        text_roll_edit=Entry(root)
-        text_roll_edit.grid(row=1,column=1)
-
-        Label(root,text="Gender").grid(row=2,column=0)
-        text_gender_edit=Entry(root)
-        text_gender_edit.grid(row=2,column=1,pady=10)
-
-        Label(root,text="Subject").grid(row=3,column=0)
-        text_subject_edit=Entry(root)
-        text_subject_edit.grid(row=3,column=1)
-
-        Label(root,text="Section").grid(row=4,column=0)
-        text_section_edit=Entry(root)
-        text_section_edit.grid(row=4,column=1,pady=10)
-
-        Label(root,text="Obtained Marks").grid(row=5,column=0)
-        text_obtmarks_edit=Entry(root)
-        text_obtmarks_edit.grid(row=5,column=1)
-
-        Label(root,text="Final Marks").grid(row=6,column=0)
-        text_finalmarks_edit=Entry(root)
-        text_finalmarks_edit.grid(row=6,column=1,pady=10)
-
-        for record in records:
-            text_name_edit.insert(0,record[0])
-            text_roll_edit.insert(0,record[1])
-            text_gender_edit.insert(0,record[2])
-            text_subject_edit.insert(0,record[3])
-            text_section_edit.insert(0,record[4])
-            text_obtmarks_edit.insert(0,record[5])
-            text_finalmarks_edit.insert(0,record[6])
-            
-        conn.commit()
-        conn.close()
-
-    def UPDATE():
-        conn= sqlite3.connect('Students.db')
-
-        c= conn.cursor()
-
-        c.execute("""UPDATE student SET
-            StudentName= :StudentName,
-            RollNo= :RollNo,
-            Gender= :Gender,
-            Subject= :Subject,
-            Section= :Section,
-            ObtainMarks= :ObtainMarks,
-            FinalMarks= :FinalMarks,
-            WHERE oid= :oid""",{
-            'uname':text_name_edit.get(),
-            'fname':text_roll_edit.get(),
-            'lname':text_gender_edit.get(),
-            'age':text_subject_edit.get(),
-            'tpercent':text_section_edit.get(),
-            'address':text_obtmarks_edit.get(),
-            'phonenumber':text_finalmarks_edit.get(),
-            'oid':UPDATE.get()
-        })
-        conn.commit()
-        conn.close()
-        root.destroy()
 
 
+    
     # Button frame ---------------
 
     bttm_Frame1=Frame(Frame1,bd=4,bg="grey")
-    bttm_Frame1.place(x=15,y=500,width=420)
+    bttm_Frame1.place(x=15,y=530,width=400, height=50)
 
-    Addbttm= Button(bttm_Frame1,text="ADD",font = ("Didot",10),width=10,command=ADD).grid(row=0,column=0,padx=10,pady=10)
-    Updatebttm= Button(bttm_Frame1,text="UPDATE",font = ("Didot",10),width=10,command=UPDATE).grid(row=0,column=1,padx=10,pady=10)
-    querybttm= Button(bttm_Frame1,text="SHOW",font = ("Didot",10),width=10,command=QUERY).grid(row=0,column=3,padx=10,pady=10)
-    Searchbttm= Button(Frame2,text="SEARCH",font = ("Didot",10),width=10,command=QUERY).grid(row=0,column=3,padx=10,pady=10)
-    Deletebttm= Button(Frame2,text="DELETE",font = ("Didot",10),width=10,command=DELETE).grid(row=0,column=4,padx=10,pady=10)
+
+
+    Addbttm= Button(bttm_Frame1,text="ADD",command=ADD).grid(row=3,column=0,padx=20,pady=20)
+    Updatebttm= Button(bttm_Frame1,text="UPDATE",command=EDIT).grid(row=3,column=1,padx=20,pady=20)
+    querybttm= Button(bttm_Frame1,text="SHOW",command=QUERY).grid(row=3,column=2,padx=20,pady=20)
+    Deletebttm= Button(bttm_Frame1,text="DELETE",command=DELETE).grid(row=3,column=3,padx=20,pady=20)
+    Searchbttm= Button(Frame2,text="SEARCH",command=QUERY).grid(row=0,column=3,padx=10,pady=20)
+
 
     # Table frame ---------------
 
@@ -681,7 +689,7 @@ def database():
 
     # student_table-----------   
 
-    student_table= ttk.Treeview(table_frame,columns=("StudentName","RollNo","Gender","Subject","Section","ObtainMarks","FinalMarks"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
+    student_table= ttk.Treeview(table_frame,columns=("StudentName","RollNo","Gender","Section","Subject","ObtainMarks","FinalMarks"),xscrollcommand=scroll_x.set,yscrollcommand=scroll_y.set)
     scroll_x.pack(side=BOTTOM,fill=X)
     scroll_y.pack(side=RIGHT,fill=Y)
     scroll_x.config(command=student_table.xview)
@@ -689,8 +697,8 @@ def database():
     student_table.heading("StudentName",text="StudentName")
     student_table.heading("RollNo",text="RollNo")
     student_table.heading("Gender",text="Gender")
-    student_table.heading("Subject",text="Subject")
     student_table.heading("Section",text="Section")
+    student_table.heading("Subject",text="Subject")
     student_table.heading("ObtainMarks",text="ObtainMarks")
     student_table.heading("FinalMarks",text="FinalMarks")
     student_table['show']='headings'
