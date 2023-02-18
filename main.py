@@ -665,7 +665,7 @@ def database():
     
     # Button frame ---------------
 
-    bttm_Frame1=Frame(Frame1,bd=4,bg="grey")
+    bttm_Frame1=Frame(Frame2,bd=4,bg="grey")
     bttm_Frame1.place(x=15,y=530,width=400, height=50)
 
 
