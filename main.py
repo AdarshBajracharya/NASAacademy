@@ -381,14 +381,13 @@ def database():
     button.place(x =0, y = 0)
 
 #==== Frame 1 ================
-
     Frame1=Frame(root,bd=4,relief=RIDGE,bg="grey")
     Frame1.place(x=20,y=100,width=450,height=590)
 
     title1= Label(Frame1,text="Manage Students Result",bd=10,relief=GROOVE,fg="white",font=("times new roman",20,"bold"),bg="red")
     title1.grid(row=0,columnspan=2,pady=20)
 
-    # create a text box and label ---- 
+# create a text box and label ---- 
 
     label_name= Label(Frame1,text="Student Name: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
     label_name.grid(row=1,column=0,pady=10,padx=20,sticky="w")
@@ -450,22 +449,14 @@ def database():
     delete_box= Entry(Frame1,font=("times new roman",15,"bold"),bd=5,relief=GROOVE)
     delete_box.grid(row=8,column=1,pady=10,padx=20,sticky="w")
 
-    #==== Frame 2 ================
+#==== Frame 2 ================
 
     Frame2=Frame(root,bd=4,relief=RIDGE,bg="grey")
     Frame2.place(x=500,y=100,width=800,height=590)
 
-    lbl_search=Label(Frame2,text="Search By: ",bg="grey",fg="white",font=("times new roman",20,"bold"))
-    lbl_search.grid(row=0,column=0,padx=20,pady=20,sticky="w")
 
-    combo_search= ttk.Combobox(Frame2,width=15,font=("times new roman",13,"bold"),state="readonly")
-    combo_search['values']=("Roll No","StudentName")
-    combo_search.grid(row=0,column=1,padx=20,pady=10)
 
-    text_Search= Entry(Frame2,width=15,font=("times new roman",15,"bold"),bd=5)
-    text_Search.grid(row=0,column=2,pady=10,padx=20,sticky="w")
-
-    # Creating a data table =============
+# Creating a data table =============
 
     conn=sqlite3.connect('Students.db')
     c=conn.cursor()
@@ -486,13 +477,48 @@ def database():
     def initialize():
             global root,text_name,text_roll,combo_gender,text_section,text_subject,text_obt_marks,text_total_marks
 
-    # update function -------------
+
+
+# update function -------------
+    def UPDATE():
+        conn= sqlite3.connect('Students.db')
+        c= conn.cursor()
+        record_id= delete_box.get()
+
+        c.execute(""" UPDATE student SET 
+            StudentName = :StudentName,
+            RollNo = :RollNo,
+            Gender = :Gender,
+            Section = :Section,
+            Subject = :Subject,
+            ObtMarks = :ObtMarks,
+            FinalMarks= :FinalMarks
+
+            WHERE oid = : oid""",
+            {
+            'StudentName': text_name_editior.get(),
+            'RollNo': text_roll_editior.get(),
+            'Gender': combo_gender_editior.get(),
+            'Section': text_section_editior.get(),
+            'Subject': combo_total_subject.get(),
+            'ObtMarks': text_obt_marks_editior.get(),    
+            'FinalMarks': combo_total_marks_editior.get(),
+
+            'oid':  record_id
+
+            })
+
+        conn.commit()
+        conn.close()
+        Frame1.destroy()
 
     def EDIT():
 
         editor= Toplevel()
         editor.title('Update Data')
         editor.geometry("1350x700+0+0")
+
+
 
         conn= sqlite3.connect('Students.db')
 
@@ -504,6 +530,14 @@ def database():
 
         records= c.fetchall()
 
+        global Frame1
+        global text_name_editior
+        global text_roll_editior
+        global text_obt_marks_editior
+        global text_section_editior
+        global combo_total_subject_editior
+        global combo_gender_editior
+        global combo_total_marks_editior
         
         Frame1=Frame(editor,bd=4,relief=RIDGE,bg="grey")
         Frame1.place(x=430,y=90,width=600,height=590)
@@ -567,16 +601,12 @@ def database():
             text_obt_marks_editior.insert(0, record[5])
             combo_total_marks_editior.insert(0, record[6])
 
-        Updatebttm_editior= Button(Frame1,text="SAVE",command= SAVE ,width=10)
+        Updatebttm_editior= Button(Frame1,text="SAVE",command= UPDATE ,width=10)
         Updatebttm_editior.grid(row=9,column=1,padx=10,pady=10)
 
-
-    # SAVE function ----------
-
-    def SAVE():
-        print("save")
-
-
+        conn.commit()
+        conn.close()
+        
     #  DELETE function ------------
 
     def DELETE():
@@ -632,12 +662,11 @@ def database():
         text_total_marks.delete(0,END)
 
         messagebox.showinfo("Alert","Added Sucessfully")
-        
-        conn.commit()
 
+        conn.commit()
         conn.close()
 
-    # SHOW query ------------
+# SHOW query ------------
 
     def QUERY():
 
@@ -666,16 +695,12 @@ def database():
     # Button frame ---------------
 
     bttm_Frame1=Frame(Frame2,bd=4,bg="grey")
-    bttm_Frame1.place(x=15,y=530,width=400, height=50)
+    bttm_Frame1.place(x=20,y=0,width=420)
 
-
-
-    Addbttm= Button(bttm_Frame1,text="ADD",command=ADD).grid(row=3,column=0,padx=20,pady=20)
-    Updatebttm= Button(bttm_Frame1,text="UPDATE",command=EDIT).grid(row=3,column=1,padx=20,pady=20)
-    querybttm= Button(bttm_Frame1,text="SHOW",command=QUERY).grid(row=3,column=2,padx=20,pady=20)
-    Deletebttm= Button(bttm_Frame1,text="DELETE",command=DELETE).grid(row=3,column=3,padx=20,pady=20)
-    Searchbttm= Button(Frame2,text="SEARCH",command=QUERY).grid(row=0,column=3,padx=10,pady=20)
-
+    Addbttm= Button(bttm_Frame1,text="ADD",width=10,command=ADD).grid(row=0,column=0,padx=10,pady=10)
+    Updatebttm= Button(bttm_Frame1,text="EDIT",width=10,command=EDIT).grid(row=0,column=1,padx=10,pady=10)
+    Deletebttm= Button(bttm_Frame1,text="DELETE",width=10,command=DELETE).grid(row=0,column=2,padx=10,pady=10)
+    querybttm= Button(bttm_Frame1,text="SHOW",width=10,command=QUERY).grid(row=0,column=3,pady=10,padx=10)
 
     # Table frame ---------------
 
