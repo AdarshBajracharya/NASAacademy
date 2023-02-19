@@ -476,12 +476,11 @@ def database():
     conn.close()
 
     def initialize():
-            global root,text_name,text_roll,combo_gender,text_section,text_subject,text_obt_marks,text_total_marks
+            global root,text_name,text_roll,combo_gender,text_section,combo_total_subject,text_obt_marks,text_total_marks
 
 
 
-# update function -------------
-
+    # update function -------------
     def UPDATE():
         conn= sqlite3.connect('Students.db')
         c= conn.cursor()
@@ -513,8 +512,6 @@ def database():
         conn.commit()
         conn.close()
         Frame1.destroy()
-
-# Edit function ------- 
 
     def EDIT():
 
@@ -594,7 +591,6 @@ def database():
         combo_total_marks_editior['values']=("75","100")
         combo_total_marks_editior.grid(row=7,column=1)
 
-        
 #  loop through result ------- 
         for record in records:
             text_name_editior.insert(0, record[0])
@@ -628,7 +624,7 @@ def database():
 
         print_record=''
         for record in records:
-            print_record += str(record[0])+'  '+str(record[1])+'  '+str(record[2])+'  '+str(record[3])+'  '+str(record[4])+'  '+str(record[5])+'  '+str(record[6])+"\n"
+            print_record += str(record[0])+'  '+str(record[1])+'  '+str(record[2])+'  '+str(record[3])+'  '+str(record[4])+'  '+str(record[5])+'  '+str(record[6])+'  '+str(record[7])+"\n"
 
         query_label= Label(student_table,text= print_record)
         query_label.grid(row=8, column=0,rowspan=2 ,columnspan=20)
@@ -638,7 +634,7 @@ def database():
         conn.commit()
         conn.close()
 
-    # ADD function --------------
+# ADD function --------------
         
     def ADD():
         conn=sqlite3.connect('Students.db')
@@ -650,9 +646,9 @@ def database():
             'RollNo': text_roll.get(),
             'Gender': combo_gender.get(),
             'Section': text_section.get(),
-            'Subject': text_subject.get(),
+            'Subject': combo_total_subject.get(),
             'ObtMarks': text_obt_marks.get(),
-            'FinalMarks': text_total_marks.get()
+            'FinalMarks': combo_total_marks.get()
             
             })
         # print('data submitted successfully')
@@ -661,9 +657,9 @@ def database():
         text_roll.delete(0,END)
         combo_gender.delete(0,END)
         text_subject.delete(0,END)
-        text_section.delete(0,END)
+        combo_total_subject.delete(0,END)
         text_obt_marks.delete(0,END)
-        text_total_marks.delete(0,END)
+        combo_total_marks.delete(0,END)
 
         messagebox.showinfo("Alert","Added Sucessfully")
 
@@ -671,7 +667,7 @@ def database():
         conn.close()
 
     
-    # Button frame ---------------
+# Button frame ---------------
 
     bttm_Frame1=Frame(Frame2,bd=4,bg="grey")
     bttm_Frame1.place(x=20,y=0,width=420)
@@ -681,7 +677,7 @@ def database():
     Deletebttm= Button(bttm_Frame1,text="DELETE",width=10,command=DELETE).grid(row=0,column=2,padx=10,pady=10)
 
 
-    # Table frame ---------------
+# Table frame ---------------
 
     table_frame= Frame(Frame2,bd=4, relief=RIDGE,bg="white")
     table_frame.place(x=10,y=70,width=770,height=500)
@@ -699,6 +695,7 @@ def database():
     scroll_y.pack(side=RIGHT,fill=Y)
     scroll_x.config(command=student_table.xview)
     scroll_y.config(command=student_table.yview)
+
     student_table["columns"] = ("StudentName", "RollNo", "Gender","Section","Subject","ObtainMarks","FinalMarks")
     student_table.heading("StudentName",text="StudentName")
     student_table.heading("RollNo",text="RollNo")
@@ -714,7 +711,7 @@ def database():
     student_table.column("Section",width=50)
     student_table.column("Subject",width=50)
     student_table.column("ObtainMarks",width=100)
-    student_table.column("FinallMarks",width=100)
+    student_table.column("FinalMarks",width=100)
     student_table.pack(fill=BOTH,expand=1)
 
 # SHOW query ------------
@@ -724,7 +721,7 @@ def database():
 
         cursor = conn.execute("SELECT * FROM student")
         for row in cursor:
-            student_table.insert(parent='', index='end', values=(row[0], row[1], row[2],row[3],row[4],row[5],row[6]))
+            student_table.insert(parent='', index='end', values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
 
 
         conn.commit()
