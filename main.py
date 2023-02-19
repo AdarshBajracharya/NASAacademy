@@ -1175,6 +1175,7 @@ def fees():
     
     fee_entry = Entry(root)
     fee_entry.pack(pady=20)
+    fee_entry.insert(0,"200000")
 
     def clickback():
         frame.pack_forget()
