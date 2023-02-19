@@ -186,6 +186,7 @@ def login_check():
   
 def reg():
 
+    global account
 
 
     global label_2
@@ -263,7 +264,8 @@ def reg():
             enter_3.delete(0,END)
             enter_4.delete(0,END)
             enter_5.delete(0,END)
-        
+
+    
      
 
     label_1 = Label(frame, text=" REGISTRATION ",font=("Heavitas",20))  
@@ -337,117 +339,7 @@ def reg():
     except sqlite3.OperationalError:
         pass
 
-def account():
 
-
-    def clickback():
-        frame.pack_forget()
-        homepage()
-
-
-    frame = Frame(win,width=700,height=600, bd = 10, highlightthickness=3, highlightbackground="black")
-    frame.pack(padx=20, pady=20)
-    frame.pack_propagate(False)
-
-    button = Button(frame, text = "Go back", font = ("heavitas",15), bg = "blue", fg = "white",command = clickback)
-    button.place(x =0, y = 0)
-
-    conn = sqlite3.connect('Students.db')
-    c = conn.cursor()
-
-    def update_details():
-        """Update the user's login details"""
-        # Get the user's new details from the Entry widgets
-        new_fname = enter_1.get()
-        new_lname = enter_2.get()
-        new_email = enter_3.get()
-        new_pass = enter_4.get()
-
-        # Connect to the database
-        conn = sqlite3.connect('Students.db')
-        c = conn.cursor()
-
-        # Update the user's details in the database
-        c.execute("UPDATE creds SET f_name=?, l_name=?, email =?, password = ?  WHERE oid=:oid", (new_fname, new_lname, new_email, new_pass),{'oid':uid})
-
-        # Commit the changes and close the connection
-        conn.commit()
-        conn.close()
-
-    def get_user_details():
-
-        conn = sqlite3.connect('Students.db')
-        c = conn.cursor()
-
-        """Get the user's details from the database"""
-        # Connect to the database
-        conn = sqlite3.connect('Students.db')
-        c = conn.cursor()
-
-        # Get the user's details from the database
-        c.execute("SELECT f_name, l_name, email , password  FROM creds WHERE oid=:oid")
-        result = c.fetchone()
-
-        # Set the values of the Entry widgets to the user's details
-        enter_1.insert(0, result[0])
-        enter_2.insert(0, result[1])
-        enter_3.insert(0, result[2])
-        enter_4.insert(0, result[3])
-
-        # Close the connection
-        conn.close()
-
-    c.execute("""SELECT * FROM creds WHERE oid=:oid""",{'oid': uid})
-    record = c.fetchone()
-
-
-
-    label_1 = Label(frame, text=" Account Details ",font=("Heavitas",20))  
-    label_1.place(x=200,y=30)  
-
-    label_2 =Label(frame, text= "First Name: ", width=20,font=("Verdana",10))  
-    label_2.place(x=150,y=130)  
-    enter_1 = Entry(frame)  
-    enter_1.place(x=290,y=130)
-
-
-    label_3= Label(frame,text="Last Name: ",width=20,font=("Verdana",10))
-    label_3.place(x=150,y=160)
-    enter_2 = Entry(frame)  
-    enter_2.place(x=290,y=160)
-
-  
-    label_4 = Label(frame, text="Email: ", width=20,font=("Verdana",10))  
-    label_4.place(x=150,y=220)  
-    enter_3 = Entry(frame)  
-    enter_3.place(x=290,y=220)  
-
-    label_5 = Label(frame, text="Password: ", width=20,font=("Verdana",10))  
-    label_5.place(x= 150,y=250)  
-    check=IntVar(value=0)
-    e_str = StringVar()
-    enter_4 = Entry(frame,show = "*",textvariable=e_str)  
-    enter_4.place(x=290,y=250) 
-    
-    def show():
-        if(check.get()==1):
-            enter_4.config(show='')
-        else:
-            enter_4.config(show='*')
-
-    get_user_details()
-        
-
-    cb = Checkbutton(frame,variable = check,command = show)
-    cb.place(x=430, y = 250)
-
- 
-    submit_button= Button(frame, text='Update',font = ("Helvetica",15) ,height = 1, width=20, bg="blue",fg='white',command = update_details)
-    submit_button.place(x=240,y=350)  
-
- 
-
-    frame.mainloop()
 
 
     
@@ -457,93 +349,219 @@ def routin():
         frame.pack_forget()
         homepage()
 
+    def clicksecA():
+        frame.pack_forget()
+        secA()
 
-    frame = Frame(win,width=1450,height=800, bd = 10, highlightthickness=3, highlightbackground="black")
+
+    def clicksecB():
+        frame.pack_forget()
+        secB()
+
+
+    frame = Frame(win,width=700,height=600, bd = 10, highlightthickness=3, highlightbackground="black")
     frame.pack(padx=20, pady=20)
     frame.pack_propagate(False)
 
     button = Button(frame, text = "Go back", font = ("heavitas",15), bg = "blue", fg = "white",command = clickback)
     button.place(x =0, y = 0)
 
-    frame1 = Frame(frame,bg="black",width=1500,height=1500)
-    frame1.pack(padx=200,pady=150)
-    frame1.propagate(False)
+    lable = Label(frame, text = "Routine of :", font=("heavitas",30))
+    lable.place(x =150, y= 150)
 
-    frame2 = Frame(frame1,bg="white",width=1500,height=1500)
-    frame2.pack(pady=10,padx=10)
-    frame2.propagate(False)
+    def secA():
 
+        def clickback():
+            frame.pack_forget()
+            routin()
+        frame = Frame(win,width=1450,height=800, bd = 10, highlightthickness=3, highlightbackground="black")
+        frame.pack(padx=20, pady=20)
+        frame.pack_propagate(False)
 
-    frame3=Frame(frame2,bg="black",width=90,height=600)
-    frame3.pack(padx=1,pady=1,side=LEFT)
-    frame3.propagate(False)
-    l8=Label(frame3,text="6AM",fg="black").pack(padx=30,pady=30)
+        button = Button(frame, text = "Go back", font = ("heavitas",15), bg = "blue", fg = "white",command = clickback)
+        button.place(x =0, y = 0)
 
+        frame1 = Frame(frame,bg="black",width=1500,height=1500)
+        frame1.pack(padx=200,pady=150)
+        frame1.propagate(False)
 
-    frame4=Frame(frame2,bg="grey",width=150,height=600)
-    frame4.pack(padx=1,pady=1,side=LEFT)
-    frame4.propagate(False)
-    b= Button(frame4, text="English" ,font =("Arial Black",10),fg="black")
-    b.place(x=50,y=30)
-    b= Button(frame4, text="Computer",font =("Arial Black",10),fg="black")
-    b.place(x=50,y=90)
-    l7=Label(frame4,text="Sunday",fg="black").pack(padx=1,pady=1) 
-
-    frame5=Frame(frame2,bg="grey",width=150,height=600)
-    frame5.pack(padx=1,pady=1,side=LEFT)
-    frame5.propagate(False)
-    b= Button(frame5, text="English",font =("Arial Black",10),fg="black")
-    b.place(x=50,y=170)
-    b= Button(frame5, text="Maths",font =("Arial Black",10),fg="black")
-    b.place(x=50,y=215)
-    l1=Label(frame5,text="Monday",fg="black").pack(padx=1,pady=1)
+        frame2 = Frame(frame1,bg="white",width=1500,height=1500)
+        frame2.pack(pady=10,padx=10)
+        frame2.propagate(False)
 
 
-    frame6=Frame(frame2,bg="grey",width=150,height=600)
-    frame6.pack(padx=1,pady=1,side=LEFT)
-    frame6.propagate(False)
-    b= Button(frame6, text="English",font =("Arial Black",10),fg="black")
-    b.place(x=50,y=290)
-    b= Button(frame6, text="Computer",font =("Arial Black",10),fg="black")
-    b.place(x=50,y=380)
-    l2=Label(frame6,text="Tuesday",fg="black").pack(padx=1,pady=1)
+        frame3=Frame(frame2,bg="black",width=90,height=600)
+        frame3.pack(padx=1,pady=1,side=LEFT)
+        frame3.propagate(False)
+        l8=Label(frame3,text="6AM",fg="black").pack(padx=30,pady=30)
 
-    frame7=Frame(frame2,bg="grey",width=150,height=600)
-    frame7.pack(padx=1,pady=1,side=LEFT)
-    frame7.propagate(False)
-    b= Button(frame7, text="Maths",font =("Arial Black",10),fg="black")
-    b.place(x=50,y=30)
-    b= Button(frame7, text="Computer",font =("Arial Black",10),fg="black")
-    b.place(x=50,y=90)
-    l3=Label(frame7,text="Wednesday",fg="black").pack(padx=1,pady=1)
 
-    frame8=Frame(frame2,bg="grey",width=150,height=600)
-    frame8.pack(padx=1,pady=1,side=LEFT)
-    frame8.propagate(False)
-    b= Button(frame8, text="Computer",font =("Arial Black",10),fg="black")
-    b.place(x=50,y=215)
-    b= Button(frame8, text="Maths",font =("Arial Black",10),fg="black")
-    b.place(x=50,y=290)
-    l4=Label(frame8,text="Thursday",fg="black").pack(padx=1,pady=1)
+        frame4=Frame(frame2,bg="grey",width=150,height=600)
+        frame4.pack(padx=1,pady=1,side=LEFT)
+        frame4.propagate(False)
+        b= Button(frame4, text="English" ,font =("Arial Black",10),fg="black")
+        b.place(x=50,y=30)
+        b= Button(frame4, text="Computer",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=90)
+        l7=Label(frame4,text="Sunday",fg="black").pack(padx=1,pady=1) 
 
-    frame9=Frame(frame2,bg="grey",width=150,height=600)
-    frame9.pack(padx=1,pady=1,side=LEFT)
-    frame9.propagate(False)
-    b= Button(frame9, text="Maths",font =("Arial Black",10),fg="black")
-    b.place(x=50,y=90)
-    b= Button(frame9, text="computer",font =("Arial Black",10),fg="black")
-    b.place(x=50,y=170)
-    l5=Label(frame9,text="Friday",fg="black").pack(padx=1,pady=1)
+        frame5=Frame(frame2,bg="grey",width=150,height=600)
+        frame5.pack(padx=1,pady=1,side=LEFT)
+        frame5.propagate(False)
+        b= Button(frame5, text="English",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=170)
+        b= Button(frame5, text="Maths",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=215)
+        l1=Label(frame5,text="Monday",fg="black").pack(padx=1,pady=1)
+
+
+        frame6=Frame(frame2,bg="grey",width=150,height=600)
+        frame6.pack(padx=1,pady=1,side=LEFT)
+        frame6.propagate(False)
+        b= Button(frame6, text="English",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=290)
+        b= Button(frame6, text="Computer",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=380)
+        l2=Label(frame6,text="Tuesday",fg="black").pack(padx=1,pady=1)
+
+        frame7=Frame(frame2,bg="grey",width=150,height=600)
+        frame7.pack(padx=1,pady=1,side=LEFT)
+        frame7.propagate(False)
+        b= Button(frame7, text="Maths",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=30)
+        b= Button(frame7, text="Computer",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=90)
+        l3=Label(frame7,text="Wednesday",fg="black").pack(padx=1,pady=1)
+
+        frame8=Frame(frame2,bg="grey",width=150,height=600)
+        frame8.pack(padx=1,pady=1,side=LEFT)
+        frame8.propagate(False)
+        b= Button(frame8, text="Computer",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=215)
+        b= Button(frame8, text="Maths",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=290)
+        l4=Label(frame8,text="Thursday",fg="black").pack(padx=1,pady=1)
+
+        frame9=Frame(frame2,bg="grey",width=150,height=600)
+        frame9.pack(padx=1,pady=1,side=LEFT)
+        frame9.propagate(False)
+        b= Button(frame9, text="Maths",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=90)
+        b= Button(frame9, text="computer",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=170)
+        l5=Label(frame9,text="Friday",fg="black").pack(padx=1,pady=1)
+        
+        l9=Label(frame3,text="7AM",fg="black").pack(padx=10,pady=10)
+        l10=Label(frame3,text="8AM",fg="black").pack(padx=10,pady=10)
+        l11=Label(frame3,text="9AM",fg="black").pack(padx=10,pady=10)
+        l12=Label(frame3,text="10AM",fg="black").pack(padx=10,pady=10)
+        l13=Label(frame3,text="11AM",fg="black").pack(padx=10,pady=10)
+        l14=Label(frame3,text="12PM",fg="black").pack(padx=10,pady=10)
+        l15=Label(frame3,text="1PM",fg="black").pack(padx=10,pady=10)
+        l16=Label(frame3,text="2PM",fg="black").pack(padx=10,pady=10)
+        l17=Label(frame3,text="3PM",fg="black").pack(padx=10,pady=10)
+
+    def secB():
+
+        def clickback():
+            frame.pack_forget()
+            routin()
+
+        frame = Frame(win,width=1450,height=800, bd = 10, highlightthickness=3, highlightbackground="black")
+        frame.pack(padx=20, pady=20)
+        frame.pack_propagate(False)
+
+        button = Button(frame, text = "Go back", font = ("heavitas",15), bg = "blue", fg = "white",command = clickback)
+        button.place(x =0, y = 0)
+
+        frame1 = Frame(frame,bg="black",width=1500,height=1500)
+        frame1.pack(padx=200,pady=150)
+        frame1.propagate(False)
+
+        frame2 = Frame(frame1,bg="white",width=1500,height=1500)
+        frame2.pack(pady=10,padx=10)
+        frame2.propagate(False)
+
+
+        frame3=Frame(frame2,bg="black",width=90,height=600)
+        frame3.pack(padx=1,pady=1,side=LEFT)
+        frame3.propagate(False)
+        l8=Label(frame3,text="6AM",fg="black").pack(padx=30,pady=30)
+
+
+        frame4=Frame(frame2,bg="grey",width=150,height=600)
+        frame4.pack(padx=1,pady=1,side=LEFT)
+        frame4.propagate(False)
+        b= Button(frame4, text="English" ,font =("Arial Black",10),fg="black")
+        b.place(x=50,y=290)
+        b= Button(frame4, text="Computer",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=215)
+        l7=Label(frame4,text="Sunday",fg="black").pack(padx=1,pady=1) 
+
+        frame5=Frame(frame2,bg="grey",width=150,height=600)
+        frame5.pack(padx=1,pady=1,side=LEFT)
+        frame5.propagate(False)
+        b= Button(frame5, text="English",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=290)
+        b= Button(frame5, text="Maths",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=380)
+        l1=Label(frame5,text="Monday",fg="black").pack(padx=1,pady=1)
+
+
+        frame6=Frame(frame2,bg="grey",width=150,height=600)
+        frame6.pack(padx=1,pady=1,side=LEFT)
+        frame6.propagate(False)
+        b= Button(frame6, text="English",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=30)
+        b= Button(frame6, text="Computer",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=125)
+        l2=Label(frame6,text="Tuesday",fg="black").pack(padx=1,pady=1)
+
+        frame7=Frame(frame2,bg="grey",width=150,height=600)
+        frame7.pack(padx=1,pady=1,side=LEFT)
+        frame7.propagate(False)
+        b= Button(frame7, text="Maths",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=125)
+        b= Button(frame7, text="Computer",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=170)
+        l3=Label(frame7,text="Wednesday",fg="black").pack(padx=1,pady=1)
+
+        frame8=Frame(frame2,bg="grey",width=150,height=600)
+        frame8.pack(padx=1,pady=1,side=LEFT)
+        frame8.propagate(False)
+        b= Button(frame8, text="Computer",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=30)
+        b= Button(frame8, text="Maths",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=125)
+        l4=Label(frame8,text="Thursday",fg="black").pack(padx=1,pady=1)
+
+        frame9=Frame(frame2,bg="grey",width=150,height=600)
+        frame9.pack(padx=1,pady=1,side=LEFT)
+        frame9.propagate(False)
+        b= Button(frame9, text="Maths",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=290)
+        b= Button(frame9, text="computer",font =("Arial Black",10),fg="black")
+        b.place(x=50,y=380)
+        l5=Label(frame9,text="Friday",fg="black").pack(padx=1,pady=1)
+        
+        l9=Label(frame3,text="7AM",fg="black").pack(padx=10,pady=10)
+        l10=Label(frame3,text="8AM",fg="black").pack(padx=10,pady=10)
+        l11=Label(frame3,text="9AM",fg="black").pack(padx=10,pady=10)
+        l12=Label(frame3,text="10AM",fg="black").pack(padx=10,pady=10)
+        l13=Label(frame3,text="11AM",fg="black").pack(padx=10,pady=10)
+        l14=Label(frame3,text="12PM",fg="black").pack(padx=10,pady=10)
+        l15=Label(frame3,text="1PM",fg="black").pack(padx=10,pady=10)
+        l16=Label(frame3,text="2PM",fg="black").pack(padx=10,pady=10)
+        l17=Label(frame3,text="3PM",fg="black").pack(padx=10,pady=10)
+
     
-    l9=Label(frame3,text="7AM",fg="black").pack(padx=10,pady=10)
-    l10=Label(frame3,text="8AM",fg="black").pack(padx=10,pady=10)
-    l11=Label(frame3,text="9AM",fg="black").pack(padx=10,pady=10)
-    l12=Label(frame3,text="10AM",fg="black").pack(padx=10,pady=10)
-    l13=Label(frame3,text="11AM",fg="black").pack(padx=10,pady=10)
-    l14=Label(frame3,text="12PM",fg="black").pack(padx=10,pady=10)
-    l15=Label(frame3,text="1PM",fg="black").pack(padx=10,pady=10)
-    l16=Label(frame3,text="2PM",fg="black").pack(padx=10,pady=10)
-    l17=Label(frame3,text="3PM",fg="black").pack(padx=10,pady=10)
+    button = Button(frame, text = "Section A", font = ("heavitas",25), bg = "white",command = clicksecA)
+    button.place(x =200, y = 250)
+
+    button = Button(frame, text = "Section B", font = ("heavitas",25), bg = "white",command = clicksecB)
+    button.place(x =200, y = 350)
+
+
 
 def homepage():
 
@@ -977,6 +995,151 @@ def database():
     student_table.column("FinalMarks",width=100)
     student_table.pack(fill=BOTH,expand=1)
 
+
+def account():
+
+
+    def clickback():
+        frame.pack_forget()
+        homepage()
+
+
+        frame = Frame(win,width=700,height=600, bd = 10, highlightthickness=3, highlightbackground="black")
+        frame.pack(padx=20, pady=20)
+        frame.pack_propagate(False)
+
+        button = Button(frame, text = "Go back", font = ("heavitas",15), bg = "blue", fg = "white",command = clickback)
+        button.place(x =0, y = 0)
+
+    def UPDATE():
+        conn= sqlite3.connect('Students.db')
+        c= conn.cursor()
+        record_id= delete_box.get()
+
+        c.execute(""" UPDATE student SET 
+            StudentName = :StudentName,
+            RollNo = :RollNo,
+            Gender = :Gender,
+            Section = :Section,
+            Subject = :Subject,
+            ObtMarks = :ObtMarks,
+            FinalMarks= :FinalMarks
+
+            WHERE oid = :oid""",
+            {
+            'StudentName': text_name_editior.get(),
+            'RollNo': text_roll_editior.get(),
+            'Gender': combo_gender_editior.get(),
+            'Section': text_section_editior.get(),
+            'Subject': combo_total_subject.get(),
+            'ObtMarks': text_obt_marks_editior.get(),    
+            'FinalMarks': combo_total_marks_editior.get(),
+
+            'oid':  record_id
+
+            })
+
+        conn.commit()
+        conn.close()
+        editor.destroy()
+
+    def EDIT():
+
+        global editor
+
+        editor= Toplevel()
+        editor.title('Update Data')
+        editor.geometry("1350x700+0+0")
+
+
+
+        conn= sqlite3.connect('Students.db')
+
+        c= conn.cursor()
+
+        record_id= delete_box.get()
+
+        c.execute("SELECT * FROM student WHERE oid = " + record_id)
+
+        records= c.fetchall()
+
+        global Frame1
+        global text_name_editior
+        global text_roll_editior
+        global text_obt_marks_editior
+        global text_section_editior
+        global combo_total_subject_editior
+        global combo_gender_editior
+        global combo_total_marks_editior
+        
+        Frame1=Frame(editor,bd=4,relief=RIDGE,bg="grey")
+        Frame1.place(x=430,y=90,width=600,height=590)
+
+        title1= Label(Frame1,text="Update Students",bd=10,relief=GROOVE,fg="white",font=("times new roman",20,"bold"),bg="red")
+        title1.grid(row=0,column=1,columnspan=3,pady=20,padx=10)
+
+        label_name_editior= Label(Frame1,text="Student Name: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_name_editior.grid(row=1,column=0,pady=10,padx=20,sticky="w")
+
+        text_name_editior= Entry(Frame1,font=("times new roman",15,"bold"),bd=5,relief=GROOVE)
+        text_name_editior.grid(row=1,column=1,pady=10,padx=20,sticky="w")
+
+        label_roll_editior= Label(Frame1,text="Roll No: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_roll_editior.grid(row=2,column=0,pady=10,padx=20,sticky="w")
+
+        text_roll_editior= Entry(Frame1,font=("times new roman",15,"bold"),bd=5,relief=GROOVE)
+        text_roll_editior.grid(row=2,column=1,pady=10,padx=20,sticky="w")
+
+        label_gender_editior= Label(Frame1,text="Gender: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_gender_editior.grid(row=3,column=0,pady=10,padx=20,sticky="w")
+
+        combo_gender_editior= ttk.Combobox(Frame1,font=("times new roman",14,"bold"),state="readonly")
+        combo_gender_editior['values']=("Male","Female")
+        combo_gender_editior.grid(row=3,column=1)
+
+        label_section_editior= Label(Frame1,text="Section: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_section_editior.grid(row=4,column=0,pady=10,padx=20,sticky="w")
+
+        text_section_editior= Entry(Frame1,font=("times new roman",15,"bold"),bd=5,relief=GROOVE)
+        text_section_editior.grid(row=4,column=1,pady=10,padx=20,sticky="w")
+
+        label_subject_editior= Label(Frame1,text="Subject: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_subject_editior.grid(row=5,column=0,pady=10,padx=20,sticky="w")
+
+        combo_total_subject_editior= ttk.Combobox(Frame1,font=("times new roman",14,"bold"),state="readonly")
+        combo_total_subject_editior['values']=("Science","Maths","English","Nepali","Social","Computer")
+        combo_total_subject_editior.grid(row=5,column=1)
+
+        label_obt_marks_editior= Label(Frame1,text="Obtain Marks: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_obt_marks_editior.grid(row=6,column=0,pady=10,padx=20,sticky="w")
+
+        text_obt_marks_editior= Entry(Frame1,font=("times new roman",15,"bold"),bd=5,relief=GROOVE)
+        text_obt_marks_editior.grid(row=6,column=1,pady=10,padx=20,sticky="w")
+
+        label_total_marks_editior= Label(Frame1,text="Total Marks: ",bg="grey",fg="white",font=("times new roman",15,"bold"))
+        label_total_marks_editior.grid(row=7,column=0,pady=10,padx=20,sticky="w")
+
+        combo_total_marks_editior= ttk.Combobox(Frame1,font=("times new roman",14,"bold"),state="readonly")
+        combo_total_marks_editior['values']=("75","100")
+        combo_total_marks_editior.grid(row=7,column=1)
+
+        
+    #  loop through result ------- 
+        for record in records:
+            text_name_editior.insert(0, record[0])
+            text_roll_editior.insert(0, record[1])
+            combo_gender_editior.set(record[2])
+            text_section_editior.insert(0, record[3])
+            combo_total_subject_editior.set(record[4])
+            text_obt_marks_editior.insert(0, record[5])
+            combo_total_marks_editior.set(record[6])
+
+        Updatebttm_editior= Button(Frame1,text="SAVE",command= UPDATE ,width=10)
+        Updatebttm_editior.grid(row=9,column=1,padx=10,pady=10)
+
+        conn.commit()
+        conn.close()
+        
 
 
     
