@@ -1172,6 +1172,9 @@ def fees():
     
     Fee = Label(root,text = "Fee",font=("times new roman ",20,"bold"),bg = "red",bd=10,relief=GROOVE)
     Fee.pack()
+    
+    fee_entry = Entry(root)
+    fee_entry.pack(pady=20)
 
     def clickback():
         frame.pack_forget()
