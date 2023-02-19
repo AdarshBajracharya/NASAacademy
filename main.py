@@ -1165,6 +1165,10 @@ def account():
 
 
 def fees():
+    root = Tk()
+    root.config(bg="grey")
+    root.geometry("400x400")
+    root.title("Fee detail")
 
     def clickback():
         frame.pack_forget()
