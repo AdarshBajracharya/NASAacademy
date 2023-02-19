@@ -1169,6 +1169,9 @@ def fees():
     root.config(bg="grey")
     root.geometry("400x400")
     root.title("Fee detail")
+    
+    Fee = Label(root,text = "Fee",font=("times new roman ",20,"bold"),bg = "red",bd=10,relief=GROOVE)
+    Fee.pack()
 
     def clickback():
         frame.pack_forget()
