@@ -1235,7 +1235,7 @@ def fees():
 
         fee_paid_entry = Entry(root,width=20)
         fee_paid_entry.pack(pady=20)
-
+        fee_entry.insert(0,"200000")
         def prepaid():
 
 
