@@ -2,11 +2,9 @@ from tkinter import *
 from tkinter import messagebox
 from tkextrafont import Font
 from PIL import ImageTk,Image
-import random
 from tkinter import ttk
 import sqlite3
-# import creds
-# import database
+
 
 
 def main():
@@ -187,8 +185,6 @@ def login_check():
   
 def reg():
 
-    global account
-
 
     global label_2
     global label_3
@@ -212,6 +208,15 @@ def reg():
         print("table created successfully")
         conn.commit()
         conn.close()
+
+    try: # Creates table if not created
+        config()
+    except sqlite3.OperationalError:
+        pass
+
+
+
+
     
 
 
@@ -333,13 +338,6 @@ def reg():
 
 
     frame.mainloop()
-
-    try: # Creates table if not created
-        config()
-    except sqlite3.OperationalError:
-        pass
-
-
 
 
     
@@ -750,7 +748,7 @@ def database():
             'RollNo': text_roll_editior.get(),
             'Gender': combo_gender_editior.get(),
             'Section': text_section_editior.get(),
-            'Subject': combo_total_subject.get(),
+            'Subject': combo_total_subject_editior.get(),
             'ObtMarks': text_obt_marks_editior.get(),    
             'FinalMarks': combo_total_marks_editior.get(),
 
@@ -905,7 +903,7 @@ def database():
                 'Section': text_section.get(),
                 'Subject': combo_total_subject.get(),
                 'ObtMarks': text_obt_marks.get(),
-                'FinalMarks': text_total_marks.get()
+                'FinalMarks': combo_total_marks.get()
                 
                 })
             # print('data submitted successfully')
@@ -941,7 +939,7 @@ def database():
 
         cursor = conn.execute("SELECT * FROM student")
         for row in cursor:
-            student_table.insert(parent='', index='end', values=(row[0], row[1], row[2],row[3],row[4],row[5],row[6]))
+            student_table.insert(parent='', index='end', values=(row[0], row[1], row[2], row[3], row[4] ,row[5] ,row[6]))
 
 
         conn.commit()
@@ -1185,7 +1183,50 @@ def fees():
     enter.place(x = 180, y = 140)
 
     
-    button_submit = Button(frame, text = "Submit", font = ("heavitas",15), bg = "blue", fg = "white",command = clickback)
+
+    def fe():
+        root = Tk()
+        root.config(bg="grey")
+        root.geometry("400x400")
+        root.title("Fee detail")
+
+
+
+
+        Fee = Label(root,text = "Fee",font=("times new roman ",20,"bold"),bg = "red",bd=10,relief=GROOVE)
+        Fee.pack()
+        fee_entry = Entry(root)
+        fee_entry.pack(pady=20)
+        fee_entry.insert(0,"200000")
+
+        fee_paid = Label(root,text = "Fee paid",font=("times new roman ",20,"bold"),bg = "red",bd=10,relief=GROOVE)
+        fee_paid.pack(pady=20)
+
+        fee_paid_entry = Entry(root,width=20)
+        fee_paid_entry.pack(pady=20)
+
+        def prepaid():
+
+
+            num2 = 200000
+            num1 = int(fee_paid_entry.get())
+            total = num2-num1
+            showvalue.set(total)
+            fee_due_result.insert(0,total)
+
+        fee_due = Button(root,text="Fee Due",font = ("times new roman ",15,"bold"),bg = "lightgreen",bd=10,relief=GROOVE,command=prepaid)
+        fee_due.pack(pady=20)
+
+
+
+        showvalue = StringVar()
+
+        fee_due_result = Entry(root,textvariable=showvalue)
+        fee_due_result.pack()
+
+        root.mainloop()
+
+    button_submit = Button(frame, text = "Submit", font = ("heavitas",15), bg = "blue", fg = "white",command = fe)
     button_submit.place(x =200, y = 180)
     
 
