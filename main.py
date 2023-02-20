@@ -81,6 +81,9 @@ def main():
     win.mainloop()
 
 def login():
+
+    '''login page'''
+
     global clickhome
     global e
     global e2
@@ -89,6 +92,7 @@ def login():
     frame.pack(padx=20, pady=20)
     frame.pack_propagate(False)
 
+    #create functions for buttons
     def clickreg():
         frame.pack_forget()
         reg()
@@ -97,6 +101,7 @@ def login():
         frame.pack_forget()
         homepage()
 
+    #inserting labels, images and buttons
     my_label = Label(frame, image=restu, borderwidth=0)
     my_label.place(x = 70, y = 180)
     s = Label(frame, text = "Sign In", font = ("Microsoft Yahei UI light",23))
@@ -113,7 +118,7 @@ def login():
     e2 =Entry(frame, width =30,show = "*",textvariable=e2_str)
     e2.place(x=550,y=250)
     check=IntVar(value=0)
-
+    #function to hide and show the password
     def show():
         if(check.get()==1):
             e2.config(show='')
@@ -130,7 +135,7 @@ def login():
 
 def login_check():
 
-
+    #creating a table for credentials
     def config():
         conn = sqlite3.connect('Students.db')
         c = conn.cursor()
@@ -160,17 +165,17 @@ def login_check():
 
     email=e.get()
     pwd=e2.get()
-    
-    if email=='' or pwd=='':
+
+    if email=='' or pwd=='':        #checking if field is empty
         messagebox.showwarning(title="Field Empty", message="Cannot be left empty")
 
-    else:
+    else:   #checking the email and password
       conn = sqlite3.connect('Students.db')
       cursor = conn.execute('SELECT * from creds where EMAIL="%s" and PASSWORD="%s"'%(email,pwd))
       if cursor.fetchone():
        messagebox.showinfo(title="Welcome", message="Login Success")
        clickhome()
-      else:
+      else: #if email and password do not match
        messagebox.showinfo(title="Wrong Details", message="Email or password wrong")
        
 
@@ -184,7 +189,8 @@ def login_check():
 
   
 def reg():
-
+ 
+    '''registration page'''
 
     global label_2
     global label_3
@@ -215,13 +221,6 @@ def reg():
         pass
 
 
-
-
-    
-
-
-
-
     frame = Frame(win,width=650,height=650, bd = 10, highlightthickness=3, highlightbackground="black")
     frame.pack(padx=20, pady=100)
     frame.pack_propagate(False)
@@ -230,7 +229,11 @@ def reg():
         frame.pack_forget()
         login()
     
-    def submit():
+    def submit():   
+
+        '''
+        entering all data into the database
+        '''
 
         global uid
 
@@ -239,7 +242,7 @@ def reg():
         email=enter_3.get()
         p = enter_4.get()
         re_p = enter_5.get()
-        if f_name=='' or l_name=='' or email=='' or p=='' or re_p=='':
+        if f_name=='' or l_name=='' or email=='' or p=='' or re_p=='':  #checking for emply fields
             messagebox.showwarning(title="Field Empty", message="Cannot be left empty")
         elif p != re_p:
             messagebox.showinfo("Pasword not matched","Passwords do not match")
@@ -271,7 +274,7 @@ def reg():
             enter_5.delete(0,END)
 
     
-     
+    #inserting labels, images and Buttons 
 
     label_1 = Label(frame, text=" REGISTRATION ",font=("Heavitas",20))  
     label_1.place(x=200,y=30)  
@@ -343,6 +346,9 @@ def reg():
     
 
 def routin():
+
+    '''routine'''
+
     def clickback():
         frame.pack_forget()
         homepage()
@@ -369,9 +375,16 @@ def routin():
 
     def secA():
 
+        '''
+        routine for section A
+        '''
+
         def clickback():
             frame.pack_forget()
             routin()
+
+        #creating the routine 
+
         frame = Frame(win,width=1450,height=800, bd = 10, highlightthickness=3, highlightbackground="black")
         frame.pack(padx=20, pady=20)
         frame.pack_propagate(False)
@@ -460,6 +473,10 @@ def routin():
         l17=Label(frame3,text="3PM",fg="black").pack(padx=10,pady=10)
 
     def secB():
+
+        '''
+        routine for section B
+        '''
 
         def clickback():
             frame.pack_forget()
@@ -563,6 +580,10 @@ def routin():
 
 def homepage():
 
+    '''
+    homepage
+    '''
+
     def clickrout():
         frame.pack_forget()
         routin()
@@ -604,6 +625,10 @@ def homepage():
     acc_details.place(x = 230, y = 630)
     
 def database():
+
+    '''
+    the student page where we can view, insert, edit and delete student data
+    '''
 
     def clickback():
         frame.pack_forget()
@@ -996,6 +1021,10 @@ def database():
 
 def account():
 
+    '''
+    the account page where account details can be updated
+    '''
+
 
     def clickback():
         frame.pack_forget()
@@ -1163,18 +1192,9 @@ def account():
 
 
 def fees():
-    root = Tk()
-    root.config(bg="grey")
-    root.geometry("400x400")
-    root.title("Fee detail")
-    
-    Fee = Label(root,text = "Fee",font=("times new roman ",20,"bold"),bg = "red",bd=10,relief=GROOVE)
-    Fee.pack()
-    
-    fee_entry = Entry(root)
-    fee_entry.pack(pady=20)
-    fee_entry.insert(0,"200000")
 
+    '''where fees are calculated'''
+    
     def clickback():
         frame.pack_forget()
         homepage()
