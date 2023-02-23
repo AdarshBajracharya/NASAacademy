@@ -1160,9 +1160,7 @@ def account():
 
         cb2 = Checkbutton(Frame1,variable = check1,command = show)
         cb2.place(x=430, y = 280)
-
-
-    
+   
         submit_button= Button(Frame1, text='Update',font = ("Helvetica",10) ,height = 1, width=20, bg="blue",fg='white',command =UPDATE)
         submit_button.place(x=240,y=450)  
 
@@ -1175,9 +1173,6 @@ def account():
             enter_4.insert(0, record[3])
             enter_5.insert(0, record[4])
             
-
-
-
         conn.commit()
         conn.close()
     button2 = Button(frame, text = "OK", font = ("heavitas",15), bg = "blue", fg = "white",command=EDIT)
